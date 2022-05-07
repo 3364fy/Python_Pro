@@ -7,9 +7,9 @@ class Net(nn.Module):
     def __init__(self):
         super(Net,self).__init__()
         #定义第一层卷积神经网络,输入通道维度=1，输出通道维度=6，卷积核大小3*3
-        self.conv1=nn.Conv2d(1,6,(3, 3))
+        self.conv1=nn.Conv2d(1,6,(3, 3),(1,1))
         # 定义第一二层卷积神经网络,输入通道维度=6，输出通道维度=16，卷积核大小3*3
-        self.conv2 = nn.Conv2d(6, 16, (3, 3))
+        self.conv2 = nn.Conv2d(6, 16, (3, 3),(1,1))
         #定义三层全连接网络
         self.fc1=nn.Linear(16*6*6,120)
         self.fc2 = nn.Linear(120,84)
@@ -32,8 +32,4 @@ class Net(nn.Module):
             return num_features
 
 net=Net()
-#print(net)
-for i in range(1,10):
-    for b in range(i):
-             print(f'{i}*{b+1}={i*b+1}',end=' ')
-    print()
+print(net)
