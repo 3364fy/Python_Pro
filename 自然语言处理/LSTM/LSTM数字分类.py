@@ -19,6 +19,11 @@ test_loader=DataLoader(test_dataset,batch_size=BATCH_SIZE,shuffle=True)
 class LSTM(nn.Module):
     def __init__(self):
         super(LSTM,self).__init__()
+        #input_size：输入特征的大小
+        #hiddensize:LSTM模块的数量
+        #numlayer:LSTM的层数
+        #batch_first:LSTM默认输入格式input[seq_len(序列长度)，batch(批次大小),feature(特征数量)]
+        #batch_first=True，input和output变为[batch(批次大小),seq_len(序列长度)，feature(特征数量)]
         self.lstm=nn.LSTM(input_size=28,hidden_size=64,num_layers=1,batch_first=True)
         self.out=nn.Linear(64,10)
         self.softmax=nn.Softmax(dim=1)
