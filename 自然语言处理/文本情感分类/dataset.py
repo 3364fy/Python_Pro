@@ -21,7 +21,6 @@ def collate_fn(batch):
     content=[ws.transform(i,max_len=max_len) for i in content]
     content=torch.LongTensor(content)
     label=torch.LongTensor(label)
-    #label=torch.tensor([[label]])
     return content,label
 
 class ImdbDataset(Dataset):

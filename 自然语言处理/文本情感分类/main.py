@@ -14,7 +14,8 @@ if __name__ == '__main__':
         file_paths=[os.path.join(data_path,file_name) for file_name in os.listdir(data_path) if file_name.endswith('txt')]
         for file_path in tqdm(file_paths):
             sentence=tokenlie(open(file_path,encoding='utf-8').read())
+            print(sentence)
             ws.fit(sentence)
     ws.bulid_vocab(min=10,max_futures=10000)
-    pickle.dump(ws, open('../data/model/情感分类/ws.pkl', 'wb'))
+    #pickle.dump(ws, open('../data/model/情感分类/ws.pkl', 'wb'))
     print(len(ws))

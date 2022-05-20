@@ -2,9 +2,9 @@ import torch
 from matplotlib import pyplot as plt
 
 learning_rate=0.01
-x=torch.rand([100,1])
+x=torch.rand([20,1])
 #print(x,end='\n===================\n')
-y_true=x*3+0.8
+y_true=4*x**2+8
 #print(y_true,end='\n===================\n')
 
 w=torch.rand([1,1],requires_grad=True)
@@ -32,8 +32,10 @@ for i in range(10000):
     b.data = b.data - learning_rate * b.grad
     print('w,b,loss',w.item(),b.item(),loss)
 
-plt.figure(figsize=(20,20))
+#plt.figure(figsize=(20,20))
 plt.scatter(x.numpy().reshape(-1),y_true.reshape(-1))
 y_predict=torch.matmul(x,w)+b
-plt.plot(x.numpy().reshape(-1),y_predict.detach().numpy().reshape(-1))
+#plt.plot(x.numpy().reshape(-1),y_predict.detach().numpy().reshape(-1))
+plt.xlabel('x')
+plt.ylabel('y')
 plt.show()

@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import torch
 from torch import nn as nn
 from torch.optim import SGD
-x=torch.rand([500,1])
+x=torch.rand([20,1])
 y_true=3*x**2+8
 
 # x=torch.tensor([[48],[5],[28],[43],[88],[24]],dtype=torch.float)

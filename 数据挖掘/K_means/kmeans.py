@@ -44,10 +44,12 @@ class KMeans:
         X: 类数组类型，形如：[样本数量，特征数量]
         '''
         X = np.asarray(X)
+        print(X)
         # 设置随机数种子，以便于可以相同的随机系列，以便随机结果重现
         np.random.seed(0)
         # 从数组中随机选择K个点作为初始聚类中心
         self.cluster_centers_ = X[np.random.randint(0, len(X), self.k)]
+        #print(self.cluster_centers_)
         # 用于存放数据所属标签
         self.labels_ = np.zeros(len(X))
         # 开始迭代
@@ -56,12 +58,15 @@ class KMeans:
             for index, x in enumerate(X):
                 # 计算每个样本与每个聚类中心的欧式距离
                 dis = np.sqrt(np.sum((x - self.cluster_centers_) ** 2, axis=1))
-                # 将最小距离的索引赋值给标签数组，索引的值就是当前所属的簇。范围威威（0，K-1）
+                # 将最小距离的索引赋值给标签数组，索引的值就是当前所属的簇。范围（0，K-1）
                 self.labels_[index] = dis.argmin()
+                #print(self.labels_[index])
             # 循环便利每一个数更新聚类中心
             for i in range(self.k):
                 # 计算每个簇内所有点的均值，用来更新聚类中心
                 self.cluster_centers_[i] = np.mean(X[self.labels_ == i], axis=0)
+                #print(self.cluster_centers_[i])
+            print(self.cluster_centers_)
 
     def predict(self, X):
         '''预测样本属于哪个簇
@@ -82,25 +87,25 @@ class KMeans:
             # 找到距离最近的聚类中中心划分一个类别
             result[index] = dis.argmin()
         return result
-kmeans=KMeans(3,50)
+kmeans=KMeans(3,1)
 kmeans.fit(t)
 # print(kmeans.cluster_centers_)
 # print(t[kmeans.labels_==0])
 
-t2=data.loc[:,"Food%":"Fresh%"]
-kmeans=KMeans(3,50)
-kmeans.fit(t2)
-plt.figure(figsize=(10,10))
-# 绘制每个类别散点图
-plt.scatter(t2[kmeans.labels_==0].iloc[:,0], t2[kmeans.labels_==0].iloc[:,1], label="类别1")
-plt.scatter(t2[kmeans.labels_==1].iloc[:,0], t2[kmeans.labels_==1].iloc[:,1], label="类别1")
-plt.scatter(t2[kmeans.labels_==2].iloc[:,0], t2[kmeans.labels_==2].iloc[:,1], label="类别1")
-# 绘制聚类中心
-plt.scatter(kmeans.cluster_centers_[:,0],kmeans.cluster_centers_[:,1], marker="+",s=300)
-plt.title("食物与肉类购买聚类分析")
-plt.xlabel("食物")
-plt.ylabel("肉类")
-plt.legend()
-plt.show()
+# t2=data.loc[:,"Food%":"Fresh%"]
+# kmeans=KMeans(3,50)
+# kmeans.fit(t2)
+# plt.figure(figsize=(10,10))
+# # 绘制每个类别散点图
+# plt.scatter(t2[kmeans.labels_==0].iloc[:,0], t2[kmeans.labels_==0].iloc[:,1], label="类别1")
+# plt.scatter(t2[kmeans.labels_==1].iloc[:,0], t2[kmeans.labels_==1].iloc[:,1], label="类别1")
+# plt.scatter(t2[kmeans.labels_==2].iloc[:,0], t2[kmeans.labels_==2].iloc[:,1], label="类别1")
+# # 绘制聚类中心
+# plt.scatter(kmeans.cluster_centers_[:,0],kmeans.cluster_centers_[:,1], marker="+",s=300)
+# plt.title("食物与肉类购买聚类分析")
+# plt.xlabel("食物")
+# plt.ylabel("肉类")
+# plt.legend()
+# plt.show()
 
 

@@ -20,6 +20,7 @@ data=pd.read_csv('Iris.csv')
 data.drop_duplicates()
 data['Species']=data['Species'].map({'Iris-versicolor':0,'Iris-virginica':1,'Iris-setosa':-1,})
 data = data[data['Species']!=0]
+print(data)
 class Perception:
     def __init__(self,alpha,times):
         '''
@@ -51,7 +52,7 @@ class Perception:
             loss=0
             for x,target in zip(X,y):
                 y_hat=self.step(np.dot(x,self.w_[1:])+self.w_[0])
-                loss+=y_hat!=target
+                loss+=1 if y_hat!=target else 0
                 self.w_[0]+=self.alpha*(target-y_hat)
                 self.w_[1:] += self.alpha * (target - y_hat)*x
                 self.loss_.append(loss)
@@ -64,6 +65,7 @@ class Perception:
         return self.step(np.dot(X,self.w_[1:])+self.w_[0])
 
 t1 = data[data["Species"]==1]
+print(t1)
 t2 = data[data["Species"]==-1]
 t1.sample(len(t1), random_state=0)
 t2.sample(len(t2), random_state=0)
@@ -72,7 +74,7 @@ train_y = pd.concat([t1.iloc[:40,-1], t2.iloc[:40, -1]], axis=0)
 test_X = pd.concat([t1.iloc[40:,:-1], t2.iloc[40:, :-1]], axis=0)
 test_y = pd.concat([t1.iloc[40:,-1], t2.iloc[40:, -1]], axis=0)
 
-p = Perception(0.1, 10)
+p = Perception(0.01, 10)
 p.fit(train_X,train_y)
 result = p.predict(test_X)
 print(result)
@@ -87,5 +89,5 @@ plt.xlabel("样本序号")
 plt.xlabel("类别")
 plt.show()
 
-plt.plot(range(1, p.times+791), p.loss_, "o-")
+plt.plot(range(0,800), p.loss_, "o-")
 plt.show()
